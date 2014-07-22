@@ -21,7 +21,7 @@ hist(num.omitted)
 # questions.
 
 cutoff = quantile(num.omitted, .99)
-remove.obs = (num.omitted > cutoff)
+remove.obs = (num.omitted > cutoff)x
 valid.responses = nonempty.responses[!remove.obs, ]
 
 # save the subset of remaining observations in a file named
