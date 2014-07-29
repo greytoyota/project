@@ -38,7 +38,7 @@ tryCatch(checkEquals(make.binary.test2, makeBinary(make.binary.rr2,
 # "binary-ling-data.data".
 
 # making rows binary
-data = read.table("lingData.txt", header=TRUE)
+data = read.table("ling-data-clean.data", header=TRUE)
 cut.data = data[, seq(5, length(data) - 2)]
 n.responses = apply(cut.data, 2, max)
 reformatted.data = as.data.frame(t(apply(cut.data, 1, makeBinary, n.responses)))
