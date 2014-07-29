@@ -13,7 +13,7 @@ nonempty.responses = ling.data[!no.responses, ]
 
 omitted = (nonempty.responses[, 5:71] == 0)
 num.omitted = rowSums(omitted)
-hist(num.omitted)
+hist(num.omitted, main="Number Omitted Questions", xlab="questions omitted")
 
 # using your subset (with observations that responded to no questions
 # removed) find the 99th percentile cutoff for number of questions
@@ -21,10 +21,10 @@ hist(num.omitted)
 # questions.
 
 cutoff = quantile(num.omitted, .99)
-remove.obs = (num.omitted > cutoff)x
+remove.obs = (num.omitted > cutoff)
 valid.responses = nonempty.responses[!remove.obs, ]
 
 # save the subset of remaining observations in a file named
 # "ling-data-clean.data" 
 
-write.table(valid.responses, file="ling-data-clean.data")
+write.table(valid.responses, file="ling-data-clean.data", row.names=FALSE)
