@@ -3,7 +3,7 @@ ling.data = read.table('lingData.txt', head=TRUE)
 # omitted every question have been removed. Store the **number** of
 # observations that you omitted as the variable <n.no.response>
 
-sums = rowSums(ling.data[, 5:71])
+sums = rowSums(ling.data[, 5:(ncol(ling.data) - 2)])
 no.responses = (sums == 0)
 n.no.response <- sum(no.responses)
 nonempty.responses = ling.data[!no.responses, ]
@@ -11,7 +11,7 @@ nonempty.responses = ling.data[!no.responses, ]
 # plot a histogram of the number of omitted responses for each observation
 # after removing observations that omitted all questions
 
-omitted = (nonempty.responses[, 5:71] == 0)
+omitted = (nonempty.responses[, 5:(ncol(ling.data) - 2)] == 0)
 num.omitted = rowSums(omitted)
 hist(num.omitted, main="Number Omitted Questions", xlab="questions omitted")
 
