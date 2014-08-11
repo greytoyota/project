@@ -50,7 +50,7 @@ question.names = names(original.responses)
 response.index = 1
 
 # Analyze binary data
-for (i in 1..length(n.responses)) {
+for (i in 1:length(n.responses)) {
     responses = binary.responses[, seq(response.index, response.index + n.responses[i] - 1)]
     analyzeBinary(responses, location.data)
     response.index = response.index + n.responses[i]
