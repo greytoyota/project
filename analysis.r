@@ -16,9 +16,12 @@ analyzeBinary <- function(responses, locations) {
 # <responses>: a numeric vector giving the response of the responder.
 # <locations>: a numeric vector containing the longitude and latitude
 #              of all responders.
-analyzeOriginal <- function(responses, locations) {
+analyzeOriginal <- function(responses, locations, question.name) {
     n.choices = max(responses)
     cols = getColors(n.choices)
+    plot(x=locations$long, y=locations$lat, xlab="Longitude", ylab="Latitude",
+         main=question.name, col=cols[responses], pch=20)
+    legend("topright", legend=1:n.choices, col=cols, pch=20)
 }
 
 # Returns a vector of colors given a desired length.
@@ -43,6 +46,7 @@ binary.responses = binary.data[, seq(5, length(binary.data) - 2)]
 n.responses = apply(original.responses, 2, max)
 location.data = binary.data[, seq(length(binary.data) - 1, length(binary.data))]
 
+question.names = names(original.responses)
 response.index = 1
 
 # Analyze binary data
@@ -53,6 +57,7 @@ for (i in 1..length(n.responses)) {
 }
 
 # Analyze original data
-apply(original.responses, 2, function(question.responses) {
-    analyzeOriginal(question.responses, location.data)
+# par(mfrow=c(8, 8))
+sapply(1:length(n.responses), function(i) {
+    analyzeOriginal(original.responses[, i], location.data, question.names[i])
 })
