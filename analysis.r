@@ -1,7 +1,14 @@
-require("RColorBrewer")
+require(maps)
+require(RColorBrewer)
 
 binary.data = read.table("binary-ling-data.data", header=TRUE)
 original.data = read.table("ling-data-clean.data", header=TRUE)
+
+# remove rows with NA for long or lat
+location.data = binary.data[, seq(length(binary.data) - 1, length(binary.data))]
+original.data = original.data[complete.cases(location.data), ]
+binary.data = binary.data[complete.cases(location.data), ]
+location.data = binary.data[, seq(length(binary.data) - 1, length(binary.data))]
 
 # Analyze the relationship between responses and location using binary data.
 # <responses>: a dataframe of the responses to a certain question.
@@ -9,7 +16,17 @@ original.data = read.table("ling-data-clean.data", header=TRUE)
 # <locations>: a numeric vector containing the longitude and latitude
 #              of all responders.
 analyzeBinary <- function(responses, locations) {
-    
+    num.responses = apply(responses, 2, sum)
+    most.frequent = which(num.responses == max(num.responses))
+    answered = rownames(responses[which(responses[, most.frequent] == 1), ])
+    plotClusters(answered, locations)
+}
+
+# Analyze binary data
+for (i in 1:length(n.responses)) {
+    responses = binary.responses[, seq(response.index, response.index + n.responses[i] - 1)]
+    analyzeBinary(responses, location.data)
+    response.index = response.index + n.responses[i]
 }
 
 # Analyze the relationship between responses and location using original data.
@@ -44,23 +61,15 @@ getColors <- function(n.choices) {
     }
     return(cols)
 }
-    
+
 
 original.responses = original.data[, seq(5, length(original.data) - 2)]
 binary.responses = binary.data[, seq(5, length(binary.data) - 2)]
 
 n.responses = apply(original.responses, 2, max)
-location.data = binary.data[, seq(length(binary.data) - 1, length(binary.data))]
 
 question.names = names(original.responses)
 response.index = 1
-
-# Analyze binary data
-for (i in 1:length(n.responses)) {
-    responses = binary.responses[, seq(response.index, response.index + n.responses[i] - 1)]
-    analyzeBinary(responses, location.data)
-    response.index = response.index + n.responses[i]
-}
 
 # Analyze original data
 makeMapsFor(1:length(n.responses), original.responses, location.data, question.names)
@@ -70,3 +79,19 @@ makeMapsFor(which(n.responses == 3)[1:9], original.responses, location.data, que
 correlation.matrix <- cor(original.responses)
 correlation.matrix[which(correlation.matrix > abs(.3))]
 # Shows that correlation between responses very small
+
+plotClusters <- function(answered.indices, location.data, k=8) {
+    answered.locations = location.data[answered.indices, ]
+    answered.locations = answered.locations[, 2:1]
+    distances = dist(answered.locations)
+    hc = hclust(distances)
+    tree = cutree(hc, k=k)
+    map('state')
+    points(answered.locations, pch=20, col=cols[tree])
+}
+
+q1.responses = binary.responses[, 1:n.responses[1]]
+answered.1 = rownames(q1.responses[which(q1.responses$Q050.1 == 1), ])
+plotClusters(answered.1, location.data)
+
+q2.responses = binary.responses[, n.responses[1]
