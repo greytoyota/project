@@ -16,12 +16,18 @@ analyzeBinary <- function(responses, locations) {
 # <responses>: a numeric vector giving the response of the responder.
 # <locations>: a numeric vector containing the longitude and latitude
 #              of all responders.
-analyzeOriginal <- function(responses, locations, question.name) {
+makeMap <- function(responses, locations, question.name) {
     n.choices = max(responses)
     cols = getColors(n.choices)
     plot(x=locations$long, y=locations$lat, xlab="Longitude", ylab="Latitude",
          main=question.name, col=cols[responses], pch=20)
     legend("topright", legend=1:n.choices, col=cols, pch=20)
+}
+
+makeMapsFor <- function(indices, responses, locations, question.names) {
+    sapply(indices, function(i) {
+        makeMap(responses[, i], locations, question.names[i])
+    })
 }
 
 # Returns a vector of colors given a desired length.
@@ -57,7 +63,10 @@ for (i in 1:length(n.responses)) {
 }
 
 # Analyze original data
-# par(mfrow=c(8, 8))
-sapply(1:length(n.responses), function(i) {
-    analyzeOriginal(original.responses[, i], location.data, question.names[i])
-})
+makeMapsFor(1:length(n.responses), original.responses, location.data, question.names)
+par(mfrow=c(3, 3))
+makeMapsFor(which(n.responses == 3)[1:9], original.responses, location.data, question.names)
+
+correlation.matrix <- cor(original.responses)
+correlation.matrix[which(correlation.matrix > abs(.3))]
+# Shows that correlation between responses very small
