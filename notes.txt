@@ -20,3 +20,9 @@ Q53.2, 51.2, 50.4: Northeast
 Florida: 60.8, 73.6, 74.4, 
 West Coast: 72.1, 
 Midwest: 72.1, 73.6, 74.4
+
+
+Changing number of clusters shows that clusters are very stable and generally 
+follow longitude, ie N -> S. West Coast, Central US, Midwest, & East Coast.
+This can be clearly seen in examples like Q058.3 of the most_frequent_k6.pdf,
+on page 9. Or 62.2 on pg 13, 67.1 pg18.
