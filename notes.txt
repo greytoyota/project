@@ -12,3 +12,11 @@ Q61.5
 Q70.5 & Q71.4
 Q72.4
 Q75.4
+
+
+Examples of stable clusters geographically:
+Q70.5, 71.4
+Q53.2, 51.2, 50.4: Northeast
+Florida: 60.8, 73.6, 74.4, 
+West Coast: 72.1, 
+Midwest: 72.1, 73.6, 74.4
