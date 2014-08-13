@@ -5,3 +5,10 @@ Q80: pg 31
 Q84: pg 35
 Q93: pg 44
 Q105: pg 56
+
+
+Examples of local language differences
+Q61.5
+Q70.5 & Q71.4
+Q72.4
+Q75.4
