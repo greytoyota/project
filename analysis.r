@@ -1,4 +1,4 @@
-require(maps)
+    require(maps)
 require(RColorBrewer)
 
 binary.data = read.table("binary-ling-data.data", header=TRUE)
