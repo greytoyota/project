@@ -12,3 +12,17 @@ Q61.5
 Q70.5 & Q71.4
 Q72.4
 Q75.4
+
+
+Examples of stable clusters geographically:
+Q70.5, 71.4
+Q53.2, 51.2, 50.4: Northeast
+Florida: 60.8, 73.6, 74.4, 
+West Coast: 72.1, 
+Midwest: 72.1, 73.6, 74.4
+
+
+Changing number of clusters shows that clusters are very stable and generally 
+follow longitude, ie N -> S. West Coast, Central US, Midwest, & East Coast.
+This can be clearly seen in examples like Q058.3 of the most_frequent_k6.pdf,
+on page 9. Or 62.2 on pg 13, 67.1 pg18.

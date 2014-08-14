@@ -43,8 +43,8 @@ getColors <- function(n.choices) {
 analyzeBinary <- function(responses, locations, k=8) {
     num.responses = apply(responses, 2, sum)
     # response is either most or least frequent response
-    # response = which(num.responses == max(num.responses))
-    response = which(num.responses == min(num.responses))
+    response = which(num.responses == max(num.responses))
+    #response = which(num.responses == min(num.responses))
     answered = rownames(responses[which(responses[, response] == 1), ])
     question.name = colnames(responses)[response]
     plotClusters(answered, locations, k=k, question.name=question.name)
