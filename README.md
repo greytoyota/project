@@ -1,4 +1,4 @@
-project
-=======
+Stat 133 Final Project
+======================
 
-stat133 final project
+In this project, we used the Maps package in R to do analysis of data on linguistic patterns throughout the United States.  
