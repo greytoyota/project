@@ -1,4 +1,4 @@
-    require(maps)
+require(maps)
 require(RColorBrewer)
 
 binary.data = read.table("binary-ling-data.data", header=TRUE)
@@ -33,6 +33,29 @@ getColors <- function(n.choices) {
     }
     return(cols)
 }
+
+# Analyze the relationship between responses and location using original data.
+# <responses>: a numeric vector giving the response of all responders to a certain question.
+# <locations>: a dataframe containing the longitude and latitude of all responders.
+makeMap <- function(responses, locations, question.name) {
+    n.choices = max(responses)
+    cols = getColors(n.choices)
+    plot(x=locations$long, y=locations$lat, xlab="Longitude", ylab="Latitude",
+         main=question.name, col=cols[responses], pch=20, xlim=xlim, ylim=ylim)
+    legend("topright", legend=1:n.choices, col=cols, pch=20)
+    map('state', add=TRUE)
+}
+
+makeMapsFor <- function(indices, responses, locations, question.names) {
+    sapply(indices, function(i) {
+        makeMap(responses[, i], locations, question.names[i])
+    })
+}
+
+# Analyze original data
+# makeMapsFor(1:length(n.responses), original.responses, location.data, question.names)
+#par(mfrow=c(3, 3))
+#makeMapsFor(which(n.responses == 3)[1:9], original.responses, location.data, question.names)
 
 # Analyze the relationship between responses and location using binary data.
 # <responses>: a dataframe of the responses to a certain question.
@@ -81,31 +104,6 @@ runBinaryAnalysis <- function(k=8) {
 
 runBinaryAnalysis(k=4)
 
-# Analyze the relationship between responses and location using original data.
-# <responses>: a numeric vector giving the response of all responders to a certain question.
-# <locations>: a dataframe containing the longitude and latitude of all responders.
-makeMap <- function(responses, locations, question.name) {
-    n.choices = max(responses)
-    cols = getColors(n.choices)
-    plot(x=locations$long, y=locations$lat, xlab="Longitude", ylab="Latitude",
-         main=question.name, col=cols[responses], pch=20, xlim=xlim, ylim=ylim)
-    legend("topright", legend=1:n.choices, col=cols, pch=20)
-    map('state', add=TRUE)
-}
-
-makeMapsFor <- function(indices, responses, locations, question.names) {
-    sapply(indices, function(i) {
-        makeMap(responses[, i], locations, question.names[i])
-    })
-}
-
-# Analyze original data
-# makeMapsFor(1:length(n.responses), original.responses, location.data, question.names)
-#par(mfrow=c(3, 3))
-#makeMapsFor(which(n.responses == 3)[1:9], original.responses, location.data, question.names)
-
-#correlation.matrix <- cor(original.responses)
-#correlation.matrix[which(correlation.matrix > abs(.3))]
 # Shows that correlation between responses very small
 plotBinaryQuestion <- function(q.name) {
     q.index = which(colnames(binary.responses) == q.name)
